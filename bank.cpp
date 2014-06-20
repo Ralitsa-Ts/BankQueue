@@ -99,11 +99,9 @@ void BankService::Servicing()
 			if(newCommer.get_commingTime() < time)
 				t=newCommer.get_commingTime();
 			else t=time-1;
-			//cout<<"newCommer at:"<<newCommer.get_commingTime()<<endl;
 			for(int p=i;p<=t;p++)
 			{
 				set_averageLength(get_averageLength() + size(q)/time);
-				//cout<<"size of queue:"<<size(q)<<endl;
 				CheckIfReady(p);
 				j=FreeCashiers(); 
 				if(j!=0 && !q.empty())
@@ -113,15 +111,12 @@ void BankService::Servicing()
 						Client client;
 						q.pop(client);
 						set_time(get_time()+ (p - client.get_commingTime()));
-						//cout<<"comming time:"<<get_time()<<","<<client.get_commingTime()<<endl;
 						int choice = rand()%j;
-						//free[choice].set_isFree(0);
 						cash[free[choice].get_number()].set_isFree(0);
 						cash[free[choice].get_number()].set_startTime(p);
 						cash[free[choice].get_number()].set_servingTime(maxServingTime);
 						cash[free[choice].get_number()].set_endTime();
 						cash[free[choice].get_number()].set_clientsCount(cash[free[choice].get_number()].get_clientsCount()+1);
-						//cout<<"\nfrom queue "<<choice<<"  "<<free[choice].get_number()<<endl;
 						FreeCashiers();
 						j--;
 					}
@@ -136,7 +131,6 @@ void BankService::Servicing()
 				if(j!=0 && q.empty())
 				{
 					int choice = rand()%j;
-					//free[choice].set_isFree(0);
 					cash[free[choice].get_number()].set_isFree(0);
 					cash[free[choice].get_number()].set_startTime(newCommer.get_commingTime());
 					cash[free[choice].get_number()].set_servingTime(maxServingTime);
@@ -145,7 +139,6 @@ void BankService::Servicing()
 				}
 				if(j==0)
 				{
-					//cout<<"all cashiers are busy!\n";
 					q.push(newCommer);	
 					set_maxLengthQueue(size(q));
 				}
@@ -215,10 +208,8 @@ double BankService::get_averageLength()const
 }
 void BankService::situation(int minute)
 {
-	//cout<<"\nsituation at "<<minute<<" minute:\n";
 	for(int i=0;i<nCashiers;i++)
 	{
-		//cout<<cash[i]<<endl;
 		if(cash[i].get_isFree())
 			cash[i].set_timeWhenFree(cash[i].get_timeWhenFree()+1);
 	}
